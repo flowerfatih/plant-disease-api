@@ -150,7 +150,7 @@ class Test(Resource):
             }
 
             if predicted_prob < 0.5:
-                return json.dumps(response_dict, cls=NumpyEncoder)
+                return json.dumps({"error":"Undefined Class"})
             elif predicted_prob < 0.7:
                 first_try = requests_count["/test"]
                 if requests_count["/test"] - first_try >= 3:
