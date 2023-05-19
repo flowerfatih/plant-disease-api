@@ -36,10 +36,20 @@ treatment_links = {
     "Tomato Spider Mites": "https://pnwhandbooks.org/insect/vegetable/vegetable-pests/hosts-pests/tomato-spider-mite",
     "Tomato Target Spot": "https://apps.lucidcentral.org/ppp/text/web_full/entities/tomato_target_spot_163.htm",
     "Tomato Mosaic Virus": "https://www.almanac.com/pest/mosaic-viruses",
-    "Tomato Yellow Leaf Curl Virus": "https://plantix.net/en/library/plant-diseases/200036/tomato-yellow-leaf-curl-virus"
+    "Tomato Yellow Leaf Curl Virus": "https://plantix.net/en/library/plant-diseases/200036/tomato-yellow-leaf-curl-virus",
+    "Aster": "mock",
+    'Daisy': "mock",
+    'Iris': "mock",
+    'Lavender': "mock",
+    'Lily': "mock",
+    'Marigold': "mock",
+    'Orchid': "mock",
+    'Poppy': "mock",
+    'Rose': "mock",
+    'Sunflower': "mock"
 }
 
-class_names = ["Apple Scab", "Apple Black Rot", "Apple Cedar Rust", "Apple Healthy", "Blueberry Healthy",
+plant_class_names = ["Apple Scab", "Apple Black Rot", "Apple Cedar Rust", "Apple Healthy", "Blueberry Healthy",
                "Cherry Healthy", "Cherry Powdery Mildew",
                "Corn Cercospora", "Corn Common Rust", "Corn Healthy", "Corn Northern Leaf Blight", "Grape Black Rot",
                "Grape Esca", "Grape Healthy", "Grape Leaf Blight",
@@ -51,10 +61,13 @@ class_names = ["Apple Scab", "Apple Black Rot", "Apple Cedar Rust", "Apple Healt
                "Tomato Spider Mites", "Tomato Target Spot", "Tomato Mosaic Virus",
                "Tomato Yellow Leaf Curl Virus"]
 
+flower_class_names = ['Aster', 'Daisy', 'Iris', 'Lavender', 'Lily', 'Marigold', 'Orchid', 'Poppy', 'Rose', 'Sunflower']
+
 model_path = "model/resnet_model.h5"
+flower_model_path = "model/flower_resnet_model.h5"
 
-response_dict = {"plantHealthModels": []}
-
+plant_response_dict = {"plantHealthModels": []}
+flower_response_dict = {"FlowerClassification": []}
 schedule = {
     "Apple Scab": {"hourly": 24},
     "Apple Black Rot": {"hourly": 24},
@@ -93,5 +106,15 @@ schedule = {
     "Tomato Spider Mites": {"hourly": 24},
     "Tomato Target Spot": {"hourly": 24},
     "Tomato Mosaic Virus": {"hourly": 24},
-    "Tomato Yellow Leaf Curl Virus": {"hourly": 24}
+    "Tomato Yellow Leaf Curl Virus": {"hourly": 24},
+    "Aster":{"hourly": 24},
+    'Daisy':{"hourly": 24},
+    'Iris':{"hourly": 24},
+    'Lavender':{"hourly": 24},
+    'Lily':{"hourly": 24},
+    'Marigold':{"hourly": 24},
+    'Orchid':{"hourly": 24},
+    'Poppy':{"hourly": 24},
+    'Rose':{"hourly": 24},
+    'Sunflower':{"hourly": 24}
 }
