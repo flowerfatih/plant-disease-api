@@ -36,7 +36,7 @@ treatment_links = {
 "Tomato Spider Mites": "https://pnwhandbooks.org/insect/vegetable/vegetable-pests/hosts-pests/tomato-spider-mite",
 "Tomato Target Spot": "https://apps.lucidcentral.org/ppp/text/web_full/entities/tomato_target_spot_163.htm",
 "Tomato Mosaic Virus": "https://www.almanac.com/pest/mosaic-viruses",
-"Tomato Yellow Leaf Curl Virus": "https://plantix.net/en/library/plant-diseases/200036/tomato-yellow-leaf-curl-virus",
+"Tomato Yellow Leaf Curl Virus": "https://plantix.net/en/library/plant-diseases/200036/tomato-yellow-leaf-curl-virus"
 }
 
 class_names = ["Apple Scab", "Apple Black Rot", "Apple Cedar Rust", "Apple Healthy", "Blueberry Healthy", "Cherry Healthy", "Cherry Powdery Mildew",
@@ -51,3 +51,45 @@ model_path = "C:/Users/fthsl/OneDrive/Masaüstü/disease-api/model/resnet_model.
 requests_count = {}
 
 response_dict = {"plantHealthModels":[]}
+
+
+schedule = {
+"Apple Scab": {"hourly": 24},
+"Apple Black Rot": {"hourly": 24},
+"Apple Cedar Rust": {"hourly": 24},
+"Apple Healthy": {"hourly": 24},
+"Blueberry Healthy": {"hourly": 24},
+"Cherry Healthy": {"hourly": 24},
+"Cherry Powdery Mildew": {"hourly": 24},
+"Corn Cercospora": {"hourly": 24},
+"Corn Common Rust": {"hourly": 24},
+"Corn Healthy": {"hourly": 24},
+"Corn Northern Leaf Blight": {"hourly": 24},
+"Grape Black Rot": {"hourly": 24},
+"Grape Esca": {"hourly": 24},
+"Grape Healthy": {"hourly": 24},
+"Grape Leaf Blight": {"hourly": 24},
+"Orange Haunglongbing": {"hourly": 24},
+"Peach Bacterial Spot": {"hourly": 24},
+"Peach Healthy": {"hourly": 24},
+"Pepper Bacterial Spot": {"hourly": 24},
+"Pepper Healthy": {"hourly": 24},
+"Potato Early Blight": {"hourly": 24},
+"Potato Healthy": {"hourly": 24},
+"Potato Late Blight": {"hourly": 24},
+"Raspberry Healthy": {"hourly": 24},
+"Soybean Healthy": {"hourly": 24},
+"Squash Powdery Mildew": {"hourly": 24},
+"Strawberry Healthy": {"hourly": 24},
+"Strawberry Leaf Scorch": {"hourly": 24},
+"Tomato Bacterial Spot": {"hourly": 24},
+"Tomato Early Blight": {"hourly": 24},
+"Tomato Healthy": {"hourly": 24},
+"Tomato Late Blight": {"hourly": 24},
+"Tomato Leaf Mold": {"hourly": 24},
+"Tomato Septoria Leaf Spot": {"hourly": 24},
+"Tomato Spider Mites": {"hourly": 24},
+"Tomato Target Spot": {"hourly": 24},
+"Tomato Mosaic Virus": {"hourly": 24},
+"Tomato Yellow Leaf Curl Virus": {"hourly": 24}
+}
