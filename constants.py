@@ -53,8 +53,6 @@ class_names = ["Apple Scab", "Apple Black Rot", "Apple Cedar Rust", "Apple Healt
 
 model_path = "model/resnet_model.h5"
 
-requests_count = {}
-
 response_dict = {"plantHealthModels": []}
 
 schedule = {

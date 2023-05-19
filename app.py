@@ -5,20 +5,11 @@ from flask_restful import Resource, Api
 from tensorflow.keras.models import load_model
 from tensorflow.keras.optimizers import Adam
 
-from constants import requests_count, model_path, class_names, treatment_links, response_dict, schedule
+from constants import model_path, class_names, treatment_links, response_dict, schedule
 from utils import NumpyEncoder, get_image_prediction
 
 app = Flask(__name__)
 api = Api(app)
-
-
-@app.before_request
-def count_requests():
-    path = request.path
-    if path not in requests_count:
-        requests_count[path] = 0
-    requests_count[path] += 1
-
 
 plant_resnet_model = load_model(model_path, compile=False)
 plant_resnet_model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
@@ -41,16 +32,9 @@ class PlantHealthAnalyse(Resource):
                     "wateringSchedule": schedule[class_names[np.argsort(np.max(prediction, axis=0))[-i]]]["hourly"]
                 })
 
-            if prediction[0][np.argsort(np.max(prediction, axis=0))[-1]] < 0.5:
-                return json.dumps({"error": "Undefined. Take a closer photograph of the leaf and try again."})
-            elif prediction[0][np.argsort(np.max(prediction, axis=0))[-1]] < 0.7:
-                # TODO: (Fatih) Check here
-                global first_try
-                first_try = requests_count["/predict"]
-                if requests_count["/predict"] - first_try >= 3:
-                    first_try = requests_count["/predict"]
-                    return json.dumps(response_dict, cls=NumpyEncoder)
-                return json.dumps({"error": "Take a closer photograph of the leaf and try again."})
+            probability = prediction[0][np.argsort(np.max(prediction, axis=0))[-1]]
+            if probability < 0.5:
+                return json.dumps({"error": "Undefined. Take another leaf photograph and try again."})
             else:
                 return json.dumps(response_dict, cls=NumpyEncoder)
         except Exception as e:
@@ -59,12 +43,6 @@ class PlantHealthAnalyse(Resource):
 
 
 api.add_resource(PlantHealthAnalyse, '/plantHealthAnalyse')
-
-
-@app.route('/count')
-def count():
-    print(requests_count)
-    return requests_count
 
 
 @app.route('/analyseHealth')
@@ -98,14 +76,6 @@ def classify():
 #
 #             if prediction[0][np.argsort(np.max(prediction, axis=0))[-1]] < 0.5:
 #                 return json.dumps(response_dict, cls=NumpyEncoder)
-#             elif prediction[0][np.argsort(np.max(prediction, axis=0))[-1]] < 0.7:
-#                 global first_try
-#                 first_try = requests_count["/predict"]
-#                 if requests_count["/predict"] - first_try >= 3:
-#
-#                     first_try = requests_count["/predict"]
-#                     return json.dumps(response_dict, cls=NumpyEncoder)
-#                 return json.dumps({"error":"Take a closer photograph of the leaf and try again."})
 #             else:
 #                 return json.dumps(response_dict, cls=NumpyEncoder)
 #         except Exception as e:
