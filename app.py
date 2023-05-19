@@ -42,7 +42,7 @@ class PlantHealthAnalyse(Resource):
                 })
 
             if prediction[0][np.argsort(np.max(prediction, axis=0))[-1]] < 0.5:
-                return json.dumps({"error": "Undefined"})
+                return json.dumps({"error": "Undefined. Take a closer photograph of the leaf and try again."})
             elif prediction[0][np.argsort(np.max(prediction, axis=0))[-1]] < 0.7:
                 # TODO: (Fatih) Check here
                 global first_try
