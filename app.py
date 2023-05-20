@@ -5,8 +5,7 @@ from flask_restful import Resource, Api
 from tensorflow.keras.models import load_model
 from tensorflow.keras.optimizers import Adam
 
-from constants import model_path, plant_class_names, treatment_links, plant_response_dict, schedule, flower_model_path, \
-    flower_response_dict, flower_class_names
+from constants import model_path, plant_class_names, treatment_links, schedule, flower_model_path, flower_class_names
 from utils import NumpyEncoder, get_image_prediction
 
 app = Flask(__name__)
@@ -15,26 +14,71 @@ api = Api(app)
 plant_resnet_model = load_model(model_path, compile=False)
 plant_resnet_model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
 
-
+flower_response_dict = {"FlowerClassification": []}
 class PlantHealthAnalyse(Resource):
-    def post(self, response_dict=plant_response_dict):
+    def post(self):
         try:
             # Get image data from the request
             img_data = request.json['data']
             data = np.array(img_data)
 
             prediction = plant_resnet_model.predict(data)
-            for i in range(1, 5, 1):
-                plant_response_dict["plantHealthModels"].append({
-                    "plantName": plant_class_names[np.argsort(np.max(prediction, axis=0))[-i]].split()[0],
-                    "diseaseName": plant_class_names[np.argsort(np.max(prediction, axis=0))[-i]],
-                    "treatmentLink": treatment_links[plant_class_names[np.argsort(np.max(prediction, axis=0))[-i]]],
-                    "probability": prediction[0][np.argsort(np.max(prediction, axis=0))[-i]],
-                    "wateringSchedule": schedule[plant_class_names[np.argsort(np.max(prediction, axis=0))[-i]]]["hourly"]
-                })
+            disease_name_1 = plant_class_names[np.argsort(np.max(prediction, axis=0))[-1]]
+            plant_name_1 = disease_name_1.split()[0]
+            treatment_link_1 = treatment_links[disease_name_1]
+            probability_1 = prediction[0][np.argsort(np.max(prediction, axis=0))[-1]]
+            watering_schedule_1 = schedule[disease_name_1]["hourly"]
 
-            probability = prediction[0][np.argsort(np.max(prediction, axis=0))[-1]]
-            if probability < 0.5:
+            disease_name_2 = plant_class_names[np.argsort(np.max(prediction, axis=0))[-2]]
+            plant_name_2 = disease_name_2.split()[0]
+            treatment_link_2 = treatment_links[disease_name_2]
+            probability_2 = prediction[0][np.argsort(np.max(prediction, axis=0))[-2]]
+            watering_schedule_2 = schedule[disease_name_2]["hourly"]
+
+            disease_name_3 = plant_class_names[np.argsort(np.max(prediction, axis=0))[-3]]
+            plant_name_3 = disease_name_3.split()[0]
+            treatment_link_3 = treatment_links[disease_name_3]
+            probability_3 = prediction[0][np.argsort(np.max(prediction, axis=0))[-3]]
+            watering_schedule_3 = schedule[disease_name_3]["hourly"]
+
+            disease_name_4 = plant_class_names[np.argsort(np.max(prediction, axis=0))[-4]]
+            plant_name_4 = disease_name_4.split()[0]
+            treatment_link_4 = treatment_links[disease_name_4]
+            probability_4 = prediction[0][np.argsort(np.max(prediction, axis=0))[-4]]
+            watering_schedule_4 = schedule[disease_name_4]["hourly"]
+
+            plant_response_dict = {"plantHealthModels": [
+                {
+                    "plantName": plant_name_1,
+                    "diseaseName": disease_name_1,
+                    "treatmentLink": treatment_link_1,
+                    "probability": probability_1,
+                    "wateringSchedule": watering_schedule_1
+                },
+                {
+                    "plantName": plant_name_2,
+                    "diseaseName": disease_name_2,
+                    "treatmentLink": treatment_link_2,
+                    "probability": probability_2,
+                    "wateringSchedule": watering_schedule_2
+                },
+                {
+                    "plantName": plant_name_3,
+                    "diseaseName": disease_name_3,
+                    "treatmentLink": treatment_link_3,
+                    "probability": probability_3,
+                    "wateringSchedule": watering_schedule_3
+                },
+                {
+                    "plantName": plant_name_4,
+                    "diseaseName": disease_name_4,
+                    "treatmentLink": treatment_link_4,
+                    "probability": probability_4,
+                    "wateringSchedule": watering_schedule_4
+                }
+            ]}
+
+            if probability_1 < 0.5:
                 return json.dumps({"error": "Undefined. Take another leaf photograph and try again."})
             else:
                 return json.dumps(plant_response_dict, cls=NumpyEncoder)
@@ -60,20 +104,60 @@ flower_resnet_model = load_model(flower_model_path, compile=False)
 flower_resnet_model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
 
 class FlowerClassification(Resource):
-    def post(self, response_dict=flower_response_dict):
+    def post(self):
         try:
             # Get image data from the request
             img_data = request.json['data']
             data = np.array(img_data)
 
             prediction = flower_resnet_model.predict(data)
-            for i in range(1,5,1):
-                flower_response_dict["FlowerClassification"].append({
-                        "flowerName": flower_class_names[np.argsort(np.max(prediction, axis=0))[-i]].split()[0],
-                        "wateringSchedule": schedule[flower_class_names[np.argsort(np.max(prediction, axis=0))[-i]]],
-                        "growingLink": treatment_links[flower_class_names[np.argsort(np.max(prediction, axis=0))[-i]]],
-                        "probability": prediction[0][np.argsort(np.max(prediction, axis=0))[-i]]
-                    })
+
+            flower_name_1 = flower_class_names[np.argsort(np.max(prediction, axis=0))[-1]].split()[0]
+            treatment_link_1 = treatment_links[flower_name_1]
+            probability_1 = prediction[0][np.argsort(np.max(prediction, axis=0))[-1]]
+            watering_schedule_1 = schedule[flower_name_1]["hourly"]
+
+            flower_name_2 = flower_class_names[np.argsort(np.max(prediction, axis=0))[-2]].split()[0]
+            treatment_link_2 = treatment_links[flower_name_2]
+            probability_2 = prediction[0][np.argsort(np.max(prediction, axis=0))[-2]]
+            watering_schedule_2 = schedule[flower_name_2]["hourly"]
+
+            flower_name_3 = flower_class_names[np.argsort(np.max(prediction, axis=0))[-3]].split()[0]
+            treatment_link_3 = treatment_links[flower_name_3]
+            probability_3 = prediction[0][np.argsort(np.max(prediction, axis=0))[-3]]
+            watering_schedule_3 = schedule[flower_name_3]["hourly"]
+
+            flower_name_4 = flower_class_names[np.argsort(np.max(prediction, axis=0))[-4]].split()[0]
+            treatment_link_4 = treatment_links[flower_name_4]
+            probability_4 = prediction[0][np.argsort(np.max(prediction, axis=0))[-4]]
+            watering_schedule_4 = schedule[flower_name_4]["hourly"]
+
+            flower_response_dict = {"plantHealthModels": [
+                {
+                    "flowerName": flower_name_1,
+                    "growingLink": treatment_link_1,
+                    "probability": probability_1,
+                    "wateringSchedule": watering_schedule_1
+                },
+                {
+                    "plantName": flower_name_2,
+                    "treatmentLink": treatment_link_2,
+                    "probability": probability_2,
+                    "wateringSchedule": watering_schedule_2
+                },
+                {
+                    "plantName": flower_name_3,
+                    "treatmentLink": treatment_link_3,
+                    "probability": probability_3,
+                    "wateringSchedule": watering_schedule_3
+                },
+                {
+                    "plantName": flower_name_4,
+                    "treatmentLink": treatment_link_4,
+                    "probability": probability_4,
+                    "wateringSchedule": watering_schedule_4
+                }
+            ]}
 
             if prediction[0][np.argsort(np.max(prediction, axis=0))[-1]] < 0.5:
                 return json.dumps(flower_response_dict, cls=NumpyEncoder)

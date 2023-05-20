@@ -66,8 +66,7 @@ flower_class_names = ['Aster', 'Daisy', 'Iris', 'Lavender', 'Lily', 'Marigold', 
 model_path = "model/resnet_model.h5"
 flower_model_path = "model/flower_resnet_model.h5"
 
-plant_response_dict = {"plantHealthModels": []}
-flower_response_dict = {"FlowerClassification": []}
+
 schedule = {
     "Apple Scab": {"hourly": 24},
     "Apple Black Rot": {"hourly": 24},
