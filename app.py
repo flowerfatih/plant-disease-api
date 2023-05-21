@@ -1,4 +1,5 @@
 import json
+
 import numpy as np
 from flask import Flask, request
 from flask_restful import Resource, Api
@@ -15,6 +16,8 @@ plant_resnet_model = load_model(model_path, compile=False)
 plant_resnet_model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
 
 flower_response_dict = {"FlowerClassification": []}
+
+
 class PlantHealthAnalyse(Resource):
     def post(self):
         try:
@@ -103,6 +106,7 @@ def classify():
 flower_resnet_model = load_model(flower_model_path, compile=False)
 flower_resnet_model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
 
+
 class FlowerClassification(Resource):
     def post(self):
         try:
@@ -167,7 +171,9 @@ class FlowerClassification(Resource):
             print("Error: ", str(e))
             return json.dumps({"error": str(e)})
 
+
 api.add_resource(FlowerClassification, '/flowerClassification')
+
 
 @app.route('/classifyFlower')
 def classifyFlower():
@@ -175,6 +181,8 @@ def classifyFlower():
     image_url = query_string[4:]
     response = get_image_prediction(image_url, "http://127.0.0.1:5000/flowerClassification")
     return response
+
+
 # endregion
 
 if __name__ == '__main__':
