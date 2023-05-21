@@ -6,7 +6,8 @@ from flask_restful import Resource, Api
 from tensorflow.keras.models import load_model
 from tensorflow.keras.optimizers import Adam
 
-from constants import model_path, plant_class_names, treatment_links, schedule, flower_model_path, flower_class_names
+from constants import model_path, plant_class_names, treatment_links, schedule, flower_model_path, flower_class_names, \
+    growing_links
 from utils import NumpyEncoder, get_image_prediction
 
 app = Flask(__name__)
@@ -24,29 +25,33 @@ class PlantHealthAnalyse(Resource):
             # Get image data from the request
             img_data = request.json['data']
             data = np.array(img_data)
-
             prediction = plant_resnet_model.predict(data)
+
             disease_name_1 = plant_class_names[np.argsort(np.max(prediction, axis=0))[-1]]
             plant_name_1 = disease_name_1.split()[0]
             treatment_link_1 = treatment_links[disease_name_1]
+            growing_link_1 = growing_links[disease_name_1]
             probability_1 = prediction[0][np.argsort(np.max(prediction, axis=0))[-1]]
             watering_schedule_1 = schedule[disease_name_1]["hourly"]
 
             disease_name_2 = plant_class_names[np.argsort(np.max(prediction, axis=0))[-2]]
             plant_name_2 = disease_name_2.split()[0]
             treatment_link_2 = treatment_links[disease_name_2]
+            growing_link_2 = growing_links[disease_name_2]
             probability_2 = prediction[0][np.argsort(np.max(prediction, axis=0))[-2]]
             watering_schedule_2 = schedule[disease_name_2]["hourly"]
 
             disease_name_3 = plant_class_names[np.argsort(np.max(prediction, axis=0))[-3]]
             plant_name_3 = disease_name_3.split()[0]
             treatment_link_3 = treatment_links[disease_name_3]
+            growing_link_3 = growing_links[disease_name_3]
             probability_3 = prediction[0][np.argsort(np.max(prediction, axis=0))[-3]]
             watering_schedule_3 = schedule[disease_name_3]["hourly"]
 
             disease_name_4 = plant_class_names[np.argsort(np.max(prediction, axis=0))[-4]]
             plant_name_4 = disease_name_4.split()[0]
             treatment_link_4 = treatment_links[disease_name_4]
+            growing_link_4 = growing_links[disease_name_4]
             probability_4 = prediction[0][np.argsort(np.max(prediction, axis=0))[-4]]
             watering_schedule_4 = schedule[disease_name_4]["hourly"]
 
@@ -56,6 +61,7 @@ class PlantHealthAnalyse(Resource):
                     "diseaseName": disease_name_1,
                     "treatmentLink": treatment_link_1,
                     "probability": probability_1,
+                    "growingLink": growing_link_1,
                     "wateringSchedule": watering_schedule_1
                 },
                 {
@@ -63,6 +69,7 @@ class PlantHealthAnalyse(Resource):
                     "diseaseName": disease_name_2,
                     "treatmentLink": treatment_link_2,
                     "probability": probability_2,
+                    "growingLink": growing_link_2,
                     "wateringSchedule": watering_schedule_2
                 },
                 {
@@ -70,6 +77,7 @@ class PlantHealthAnalyse(Resource):
                     "diseaseName": disease_name_3,
                     "treatmentLink": treatment_link_3,
                     "probability": probability_3,
+                    "growingLink": growing_link_3,
                     "wateringSchedule": watering_schedule_3
                 },
                 {
@@ -77,6 +85,7 @@ class PlantHealthAnalyse(Resource):
                     "diseaseName": disease_name_4,
                     "treatmentLink": treatment_link_4,
                     "probability": probability_4,
+                    "growingLink": growing_link_4,
                     "wateringSchedule": watering_schedule_4
                 }
             ]}
