@@ -134,7 +134,7 @@ class FlowerClassification(Resource):
 
             flower_response_dict = {"plantHealthModels": [
                 {
-                    "flowerName": flower_name_1,
+                    "plantName": flower_name_1,
                     "growingLink": treatment_link_1,
                     "probability": probability_1,
                     "wateringSchedule": watering_schedule_1
