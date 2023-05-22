@@ -37,6 +37,7 @@ treatment_links = {
     "Tomato Target Spot": "https://apps.lucidcentral.org/ppp/text/web_full/entities/tomato_target_spot_163.htm",
     "Tomato Mosaic Virus": "https://www.almanac.com/pest/mosaic-viruses",
     "Tomato Yellow Leaf Curl Virus": "https://plantix.net/en/library/plant-diseases/200036/tomato-yellow-leaf-curl-virus",
+    # TODO change mocks
     "Aster": "mock",
     'Daisy': "mock",
     'Iris': "mock",
@@ -157,6 +158,7 @@ flower_class_names = [
 model_path = "model/resnet_model.h5"
 flower_model_path = "model/flower_resnet_model.h5"
 
+# TODO change hours
 schedule = {
     "Apple Scab": {"hourly": 24},
     "Apple Black Rot": {"hourly": 24},
