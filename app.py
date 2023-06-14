@@ -126,47 +126,47 @@ class FlowerClassification(Resource):
             prediction = flower_resnet_model.predict(data)
 
             flower_name_1 = flower_class_names[np.argsort(np.max(prediction, axis=0))[-1]].split()[0]
-            treatment_link_1 = treatment_links[flower_name_1]
+            growing_link_1 = growing_links[flower_name_1]
             probability_1 = prediction[0][np.argsort(np.max(prediction, axis=0))[-1]]
             watering_schedule_1 = schedule[flower_name_1]["hourly"]
 
             flower_name_2 = flower_class_names[np.argsort(np.max(prediction, axis=0))[-2]].split()[0]
-            treatment_link_2 = treatment_links[flower_name_2]
+            growing_link_2 = growing_links[flower_name_2]
             probability_2 = prediction[0][np.argsort(np.max(prediction, axis=0))[-2]]
             watering_schedule_2 = schedule[flower_name_2]["hourly"]
 
             flower_name_3 = flower_class_names[np.argsort(np.max(prediction, axis=0))[-3]].split()[0]
-            treatment_link_3 = treatment_links[flower_name_3]
+            growing_link_3 = growing_links[flower_name_3]
             probability_3 = prediction[0][np.argsort(np.max(prediction, axis=0))[-3]]
             watering_schedule_3 = schedule[flower_name_3]["hourly"]
 
             flower_name_4 = flower_class_names[np.argsort(np.max(prediction, axis=0))[-4]].split()[0]
-            treatment_link_4 = treatment_links[flower_name_4]
+            growing_link_4 = growing_links[flower_name_4]
             probability_4 = prediction[0][np.argsort(np.max(prediction, axis=0))[-4]]
             watering_schedule_4 = schedule[flower_name_4]["hourly"]
 
             flower_response_dict = {"plantHealthModels": [
                 {
                     "plantName": flower_name_1,
-                    "growingLink": treatment_link_1,
+                    "growingLink": growing_link_1,
                     "probability": probability_1,
                     "wateringSchedule": watering_schedule_1
                 },
                 {
                     "plantName": flower_name_2,
-                    "treatmentLink": treatment_link_2,
+                    "treatmentLink": growing_link_2,
                     "probability": probability_2,
                     "wateringSchedule": watering_schedule_2
                 },
                 {
                     "plantName": flower_name_3,
-                    "treatmentLink": treatment_link_3,
+                    "treatmentLink": growing_link_3,
                     "probability": probability_3,
                     "wateringSchedule": watering_schedule_3
                 },
                 {
                     "plantName": flower_name_4,
-                    "treatmentLink": treatment_link_4,
+                    "treatmentLink": growing_link_4,
                     "probability": probability_4,
                     "wateringSchedule": watering_schedule_4
                 }
